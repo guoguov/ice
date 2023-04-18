@@ -11,8 +11,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	atomicx "github.com/pion/ice/v2/internal/atomic"
-	stunx "github.com/pion/ice/v2/internal/stun"
+	atomicx "github.com/guoguov/ice/internal/atomic"
+	stunx "github.com/guoguov/ice/internal/stun"
 	"github.com/pion/logging"
 	"github.com/pion/mdns"
 	"github.com/pion/stun"
@@ -71,6 +71,8 @@ type Agent struct {
 
 	portMin uint16
 	portMax uint16
+
+	srflxPredictNumber int
 
 	candidateTypes []CandidateType
 
@@ -850,6 +852,12 @@ func (a *Agent) addCandidate(ctx context.Context, c Candidate, candidateConn net
 
 		a.requestConnectivityCheck()
 
+		a.chanCandidate <- c
+	})
+}
+
+func (a *Agent) addPredictCandidate(ctx context.Context, c Candidate) error {
+	return a.run(ctx, func(ctx context.Context, agent *Agent) {
 		a.chanCandidate <- c
 	})
 }
