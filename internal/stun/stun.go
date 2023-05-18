@@ -150,7 +150,7 @@ func GetXORMappedAddrs(conn, conn2 net.PacketConn, serverAddr net.Addr, timeout 
 			addrs = append(addrs, ret2.xorAddr)
 			predictPort := ret2.xorAddr.Port
 			for i := 0; i < predictNumber; i++ {
-				predictPort += delta
+				predictPort += 1
 				addrs = append(addrs, &stun.XORMappedAddress{IP: ret2.xorAddr.IP, Port: predictPort})
 			}
 		}

@@ -590,7 +590,7 @@ func (a *Agent) setSelectedPair(p *CandidatePair) {
 
 	p.nominated = true
 	a.selectedPair.Store(p)
-	a.log.Tracef("Set selected candidate pair: %s", p)
+	a.log.Infof("Set selected candidate pair: %s", p)
 
 	a.updateConnectionState(ConnectionStateConnected)
 
